@@ -1,14 +1,15 @@
-"use client";
+// app/page.js (or app/page.tsx)
 import ComponentList from "./Temp/ComponentList";
-import { Provider } from "react-redux";
-import store from "./store/store";
+import ReduxProvider from "./store/ReduxProvider";
+import axios from "axios";
 
-export default function Home() {
+export default async function Home() {
+  const res = await axios.get("http://localhost:5000/");
+  const data = res.data;
+
   return (
-    <Provider store={store}>
-      <div>
-        <ComponentList />
-      </div>
-    </Provider>
+    <ReduxProvider preloadedState={{ test: data }}>
+      <ComponentList />
+    </ReduxProvider>
   );
 }
